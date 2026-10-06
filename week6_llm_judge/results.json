@@ -1,0 +1,252 @@
+[
+  {
+    "question": "Can you tell me Apple's revenue by products and services for fiscal year 2025?",
+    "rag_model": "gpt-4o-mini",
+    "rag_answer": "In fiscal year 2025, Apple's revenue by products and services was as follows (in millions of dollars):\n\n- iPhone: $209,586\n- Mac: $33,708\n- iPad: $28,023\n- Wearables, Home and Accessories: $35,686\n- Services: $109,158\n\nTotal net sales amounted to $416,161 million (or $416.161 billion) (Page 26.0).",
+    "sources": [
+      {
+        "page_number": 5.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 7.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 24.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 25.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 26.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 27.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 32.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 37.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 39.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 51.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      }
+    ],
+    "judge_model": "gemini-3-flash-preview",
+    "judge_reasoning": "The answer accurately provides the 2025 revenue figures for each product category and services as listed in the provided financial tables.",
+    "verdict": "correct"
+  },
+  {
+    "question": "Where is Apple headquartered?",
+    "rag_model": "gpt-4o-mini",
+    "rag_answer": "Apple is headquartered in Cupertino, California (Page 20.0).",
+    "sources": [
+      {
+        "page_number": 3.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 4.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 5.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 7.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 20.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 32.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 33.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 34.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 37.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 76.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      }
+    ],
+    "judge_model": "gemini-3-flash-preview",
+    "judge_reasoning": "The retrieved context on Page 20.0 explicitly states that Apple's headquarters is located in Cupertino, California.",
+    "verdict": "correct"
+  },
+  {
+    "question": "How many full-time equivalent employees did Apple have as of September 27, 2025?",
+    "rag_model": "gpt-4o-mini",
+    "rag_answer": "I don't know.",
+    "sources": [
+      {
+        "page_number": 24.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 26.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 28.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 32.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 34.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 39.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 42.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 43.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 48.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 51.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      }
+    ],
+    "judge_model": "gemini-3-flash-preview",
+    "judge_reasoning": "The provided context does not contain information regarding the number of full-time equivalent employees.",
+    "verdict": "correct"
+  },
+  {
+    "question": "What is the fiscal year end date covered by this Form 10-K?",
+    "rag_model": "gpt-4o-mini",
+    "rag_answer": "The fiscal year end date covered by this Form 10-K is September 27, 2025 (Page 1.0).",
+    "sources": [
+      {
+        "page_number": 1.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 2.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 3.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 29.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 31.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 55.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 56.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 57.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 59.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 60.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      }
+    ],
+    "judge_model": "gemini-3-flash-preview",
+    "judge_reasoning": "The retrieved context explicitly states on multiple pages, including the cover page (Page 1.0), that the fiscal year ended on September 27, 2025.",
+    "verdict": "correct"
+  },
+  {
+    "question": "Did Apple pay dividends or repurchase shares during fiscal year 2025?",
+    "rag_model": "gpt-4o-mini",
+    "rag_answer": "Yes, Apple repurchased shares and paid dividends during fiscal year 2025. The company repurchased $89.3 billion of its common stock and paid dividends and dividend equivalents of $15.4 billion (Page 29.0).",
+    "sources": [
+      {
+        "page_number": 22.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 24.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 29.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 32.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 35.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 36.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 37.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 39.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 47.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      },
+      {
+        "page_number": 48.0,
+        "source": "_10-K-2025-As-Filed.pdf"
+      }
+    ],
+    "judge_model": "gemini-3-flash-preview",
+    "judge_reasoning": "The answer accurately states that Apple repurchased shares and paid dividends in 2025, citing the specific dollar amounts found on page 29.0 of the context.",
+    "verdict": "correct"
+  }
+]
