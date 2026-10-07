@@ -39,11 +39,13 @@ class AskRequest(BaseModel):
 class SourcePage(BaseModel):
     page_number: Optional[int] = None
     source: Optional[str] = None
+    text: Optional[str] = None
 
 
 class AskResponse(BaseModel):
     answer: str
     sources: List[SourcePage]
+    context: Optional[str] = None
 
 
 class UploadResponse(BaseModel):

@@ -141,15 +141,25 @@ def build_chain(index_name: str, k: int = RETRIEVER_K):
 
 
 def ask(question: str, index_name: str = DEFAULT_INDEX_NAME, k: int = RETRIEVER_K) -> dict:
-    retriever, chain = build_chain(index_name, k=k)
-    answer = chain.invoke(question)
+    """Retrieve once, generate from that exact context, and return that same
+    context alongside the answer — so callers (e.g. an LLM-as-judge) see
+    precisely what the generator saw, rather than a second, possibly
+    different retrieval.
+    """
+    retriever, _ = build_chain(index_name, k=k)
     docs = retriever.invoke(question)
+    context_text = format_docs(docs)
+
+    llm = ChatOpenAI(model=CHAT_MODEL, temperature=0)
+    answer_chain = PROMPT | llm | StrOutputParser()
+    answer = answer_chain.invoke({"context": context_text, "question": question})
+
     seen = {}
     for doc in docs:
         page = doc.metadata.get("page_number")
-        seen[page] = doc.metadata.get("source")
+        seen[page] = {"source": doc.metadata.get("source"), "text": doc.page_content}
     sources = [
-        {"page_number": page, "source": source}
-        for page, source in sorted(seen.items(), key=lambda item: (item[0] is None, item[0]))
+        {"page_number": page, "source": info["source"], "text": info["text"]}
+        for page, info in sorted(seen.items(), key=lambda item: (item[0] is None, item[0]))
     ]
-    return {"answer": answer, "sources": sources}
+    return {"answer": answer, "context": context_text, "sources": sources}
