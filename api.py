@@ -1,20 +1,23 @@
-"""FastAPI backend: upload a PDF (page-based ingestion into a new Pinecone
-index) and ask questions against any ingested index (including the existing
-apple-10k-2025 homework index).
+"""FastAPI backend: upload a PDF (page-based ingestion into a new vector-DB
+collection) and ask questions against any ingested collection, on either of
+two providers — Pinecone (the original apple-10k-2025 homework index and
+any later upload) or a local, on-disk Qdrant instance.
 
 Run with: uvicorn api:app --reload --port 8000
 """
 
 import tempfile
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from rag_core import DEFAULT_INDEX_NAME, ask, ingest_pdf, make_index_name
+import qdrant_core
+import rag_core
+from rag_core import DEFAULT_INDEX_NAME
 
 load_dotenv()
 
@@ -30,10 +33,13 @@ app.add_middleware(
 MAX_UPLOAD_BYTES = 25 * 1024 * 1024
 CHUNK_SIZE = 1024 * 1024
 
+Provider = Literal["pinecone", "qdrant"]
+
 
 class AskRequest(BaseModel):
     question: str
     index_name: str = DEFAULT_INDEX_NAME
+    provider: Provider = "pinecone"
 
 
 class SourcePage(BaseModel):
@@ -52,6 +58,7 @@ class UploadResponse(BaseModel):
     index_name: str
     filename: str
     page_count: int
+    provider: Provider = "pinecone"
 
 
 @app.get("/health")
@@ -60,7 +67,10 @@ def health() -> dict:
 
 
 @app.post("/upload", response_model=UploadResponse)
-async def upload(file: UploadFile = File(...)) -> UploadResponse:
+async def upload(
+    file: UploadFile = File(...),
+    provider: Provider = Form("pinecone"),
+) -> UploadResponse:
     filename = file.filename or "document.pdf"
     if not filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are supported.")
@@ -81,13 +91,19 @@ async def upload(file: UploadFile = File(...)) -> UploadResponse:
         if size == 0:
             raise HTTPException(status_code=400, detail="Uploaded file is empty.")
 
-        index_name = make_index_name(filename)
         try:
-            page_count = ingest_pdf(tmp_path, index_name, source_name=filename)
+            if provider == "qdrant":
+                collection_name = qdrant_core.make_collection_name(filename)
+                page_count = qdrant_core.ingest_pdf(tmp_path, collection_name, source_name=filename)
+            else:
+                collection_name = rag_core.make_index_name(filename)
+                page_count = rag_core.ingest_pdf(tmp_path, collection_name, source_name=filename)
         except Exception as exc:
             raise HTTPException(status_code=500, detail=f"Ingestion failed: {exc}") from exc
 
-    return UploadResponse(index_name=index_name, filename=filename, page_count=page_count)
+    return UploadResponse(
+        index_name=collection_name, filename=filename, page_count=page_count, provider=provider
+    )
 
 
 @app.post("/ask", response_model=AskResponse)
@@ -95,7 +111,10 @@ def ask_question(request: AskRequest) -> AskResponse:
     if not request.question.strip():
         raise HTTPException(status_code=400, detail="Question must not be empty.")
     try:
-        result = ask(request.question, index_name=request.index_name)
+        if request.provider == "qdrant":
+            result = qdrant_core.ask(request.question, collection_name=request.index_name)
+        else:
+            result = rag_core.ask(request.question, index_name=request.index_name)
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Query failed: {exc}") from exc
     return AskResponse(**result)

@@ -4,3 +4,6 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
+
+# local on-disk Qdrant storage (embedded mode)
+qdrant_data/
